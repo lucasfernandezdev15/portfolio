@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="400" y2="400">
+      <stop offset="0%" stop-color="#1a2440"/>
+      <stop offset="50%" stop-color="#141414"/>
+      <stop offset="100%" stop-color="#2a1a30"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="400" y2="400">
+      <stop offset="0%" stop-color="#e8d5b0"/>
+      <stop offset="50%" stop-color="#2c6cff"/>
+      <stop offset="100%" stop-color="#e040fb"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="188" stroke="url(#ring)" stroke-width="3" fill="none" opacity="0.85"/>
+  <text x="200" y="228" text-anchor="middle" font-family="Georgia, serif" font-size="120" font-weight="600" fill="#f0ede8" letter-spacing="-4">LF</text>
+  <text x="200" y="310" text-anchor="middle" font-family="monospace" font-size="18" fill="#7a7670" letter-spacing="6">FULLSTACK</text>
+</svg>

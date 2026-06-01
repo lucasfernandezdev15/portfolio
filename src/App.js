@@ -59,6 +59,83 @@ function ScrollProgress() {
   return <div className="scroll-progress" style={{ width: `${progress}%` }} aria-hidden />;
 }
 
+function HeroParticles() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let raf;
+    let w = 0;
+    let h = 0;
+
+    const particles = Array.from({ length: 55 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.8 + 0.4,
+      vx: (Math.random() - 0.5) * 0.00025,
+      vy: (Math.random() - 0.5) * 0.00025,
+      a: Math.random() * 0.45 + 0.15,
+    }));
+
+    const resize = () => {
+      w = canvas.offsetWidth;
+      h = canvas.offsetHeight;
+      canvas.width = w * devicePixelRatio;
+      canvas.height = h * devicePixelRatio;
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > 1) p.vx *= -1;
+        if (p.y < 0 || p.y > 1) p.vy *= -1;
+      });
+
+      for (let i = 0; i < particles.length; i += 1) {
+        for (let j = i + 1; j < particles.length; j += 1) {
+          const a = particles[i];
+          const b = particles[j];
+          const dx = (a.x - b.x) * w;
+          const dy = (a.y - b.y) * h;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 120) {
+            ctx.strokeStyle = `rgba(232,213,176,${(1 - dist / 120) * 0.12})`;
+            ctx.lineWidth = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(a.x * w, a.y * h);
+            ctx.lineTo(b.x * w, b.y * h);
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(232,213,176,${p.a})`;
+        ctx.fill();
+      });
+
+      raf = requestAnimationFrame(draw);
+    };
+
+    resize();
+    draw();
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="hero-particles" aria-hidden />;
+}
+
 function HeroSpotlight() {
   const ref = useRef(null);
   useEffect(() => {
@@ -120,9 +197,9 @@ function ScrambleTitle({ text, className = '' }) {
 }
 
 const TERMINAL_LINES = [
-  { prompt: '$', cmd: 'whoami', out: 'lucas-fernandez · senior-frontend · AR' },
-  { prompt: '$', cmd: 'cat stack.json', out: '{ react, next, typescript, node, ai-tools }' },
-  { prompt: '$', cmd: 'git log --oneline | head -1', out: 'a3f91c2 shipping production apps since 2013' },
+  { prompt: '$', cmd: 'whoami', out: 'lucas-fernandez · fullstack-engineer · AR' },
+  { prompt: '$', cmd: 'cat stack.json', out: '{ react, next, node, python, ai-tools }' },
+  { prompt: '$', cmd: 'curl devprobe.vercel.app/health', out: '200 OK · 28 challenges live' },
   { prompt: '$', cmd: 'cursor --status', out: '● AI-augmented workflow · Claude · Copilot' },
 ];
 
@@ -281,18 +358,27 @@ function Typewriter({ strings, speed = 75 }) {
   return <span className="typewriter">{display}<span className="caret">|</span></span>;
 }
 
-function ProjectCard({ title, tech, desc, tag, href, delay, featured = false, index = 0 }) {
+function ProjectCard({ title, tech, desc, tag, demoUrl, githubUrl, metric, delay, featured = false, index = 0 }) {
   return (
     <Reveal delay={delay} className={`bento-item bento-item-${index}${featured ? ' bento-featured' : ''}`}>
       <TiltCard featured={featured}>
         <div className="proj-index">{String(index + 1).padStart(2, '0')}</div>
         <div className="proj-tag">{tag}</div>
         <h3 className="proj-title">{title}</h3>
+        {metric && (
+          <div className="proj-metric">
+            <span className="proj-metric-value">{metric.value}</span>
+            <span className="proj-metric-label">{metric.label}</span>
+          </div>
+        )}
         <p className="proj-desc">{desc}</p>
         <div className="proj-tech">
           {tech.map(t => <span key={t} className="tech-badge">{t}</span>)}
         </div>
-        {href && <a href={href} target="_blank" rel="noreferrer" className="proj-link">View on GitHub →</a>}
+        <div className="proj-links">
+          {demoUrl && <a href={demoUrl} target="_blank" rel="noreferrer" className="proj-link proj-link-live">Live demo →</a>}
+          {githubUrl && <a href={githubUrl} target="_blank" rel="noreferrer" className="proj-link">GitHub →</a>}
+        </div>
       </TiltCard>
     </Reveal>
   );
@@ -308,49 +394,54 @@ export default function App() {
 
   const skills = [
     { name: 'React / Next.js', level: 95, color: '#61DAFB' },
-    { name: 'TypeScript', level: 90, color: '#3178C6' },
-    { name: 'Node.js', level: 82, color: '#8CC84B' },
+    { name: 'TypeScript / Node.js', level: 90, color: '#3178C6' },
+    { name: 'Python / APIs', level: 82, color: '#8CC84B' },
     { name: 'AI Tooling — Claude · Copilot · Cursor', level: 88, color: '#F5A623' },
-    { name: 'Tailwind CSS', level: 92, color: '#38BDF8' },
-    { name: 'Contentful / Sanity CMS', level: 85, color: '#F1564C' },
+    { name: 'PostgreSQL / MongoDB', level: 80, color: '#38BDF8' },
+    { name: 'Vercel / CI · Docker', level: 85, color: '#F1564C' },
   ];
 
   const projects = [
     {
-      title: 'Headless E-commerce Storefront',
-      tech: ['Next.js', 'Contentful', 'TypeScript', 'Tailwind'],
-      desc: 'Full headless commerce architecture with dynamic CMS-driven pages, optimized conversion funnel, and SSR for SEO.',
-      tag: 'E-commerce',
-      href: 'https://github.com/lucasfernandezdev15',
-      featured: true,
-    },
-    {
-      title: 'Component Library — 40+ components',
-      tech: ['React', 'Storybook', 'Material UI', 'TypeScript'],
-      desc: 'Production-grade UI library with full TypeScript coverage, accessibility standards, and visual regression tests.',
-      tag: 'Design System',
-      href: 'https://github.com/lucasfernandezdev15',
-    },
-    {
-      title: 'AI-Powered PR Review Bot',
-      tech: ['Node.js', 'Claude API', 'GitHub Actions'],
-      desc: 'GitHub Action that uses Claude to review PRs automatically — catches logic issues and enforces team conventions.',
+      title: 'DevProbe — Live Coding Tests',
+      tech: ['Next.js', 'TypeScript', 'Claude API', 'React Query'],
+      desc: 'Practice platform for senior frontend interviews. AI reads your code on an interval and gives real-time advice — like a live interviewer watching your screen.',
       tag: 'AI Tooling',
-      href: 'https://github.com/lucasfernandezdev15',
+      demoUrl: 'https://live-coding-test-alpha.vercel.app/',
+      githubUrl: 'https://github.com/lucasfernandezdev15',
+      featured: true,
+      metric: { value: '28+ challenges', label: 'AI reviewer polls your code every ~30s during sessions' },
+    },
+    {
+      title: 'FieldAnalyst — Hockey Analytics',
+      tech: ['React', 'Video API', 'Canvas', 'Zustand'],
+      desc: 'Sports video editor inspired by LongoMatch plus a tactical board for field hockey. Tag events on the timeline, draw formations, analyze set pieces.',
+      tag: 'Sports Tech',
+      demoUrl: 'https://fieldhockey-analyst.vercel.app/',
+      githubUrl: 'https://github.com/lucasfernandezdev15',
+      metric: { value: '2-in-1', label: 'frame-accurate video tagging + tactical pizarra in one app' },
+    },
+    {
+      title: 'Filuca — Artisan Fashion',
+      tech: ['React', 'CSS', 'Vercel', 'WhatsApp API'],
+      desc: 'Editorial storefront for a handmade knitwear brand in Buenos Aires. Limited-edition catalog, collection filters, direct WhatsApp checkout.',
+      tag: 'E-commerce',
+      demoUrl: 'https://filuca.vercel.app/',
+      metric: { value: 'LCP 1.8s', label: 'mobile · static deploy, zero backend overhead' },
     },
     {
       title: 'CMS Migration Pipeline',
       tech: ['Python', 'Sanity', 'Contentful', 'Node.js'],
-      desc: 'Automated pipeline migrating 10k+ content entries between CMS platforms with zero downtime and rollback support.',
+      desc: 'Automated pipeline migrating content entries between CMS platforms with validation, dry-run mode, and rollback on failure.',
       tag: 'Backend',
-      href: 'https://github.com/lucasfernandezdev15',
+      githubUrl: 'https://github.com/lucasfernandezdev15',
+      metric: { value: '10k+ entries', label: 'migrated with zero downtime · rollback on fail' },
     },
   ];
 
   const marqueeItems = [
-    'React 19', 'Next.js', 'TypeScript', 'Node.js', 'Claude API', 'Cursor',
-    'Contentful', 'Sanity', 'Tailwind', 'Storybook', 'GitHub Actions', 'Vercel',
-    'E-commerce', 'Headless CMS', 'Design Systems', 'AI Tooling',
+    'React 19', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'Claude API',
+    'PostgreSQL', 'Zustand', 'React Query', 'Vercel', 'Docker', 'Fullstack',
   ];
 
   return (
@@ -370,6 +461,7 @@ export default function App() {
 
       <section className="hero" id="hero">
         <div className="hero-aurora" aria-hidden />
+        <HeroParticles />
         <div className="hero-waves" aria-hidden>
           <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
             <path className="wave wave-1" d="M0,160 C360,80 720,240 1080,160 C1260,120 1380,180 1440,160 L1440,320 L0,320 Z" />
@@ -382,17 +474,20 @@ export default function App() {
           <div className="hero-content">
             <Reveal><p className="eyebrow">Available for remote work</p></Reveal>
             <Reveal delay={100}>
-              <h1 className="hero-name">
-                <GlitchText text="Lucas" /> <span className="name-light">Fernandez</span>
-              </h1>
+              <div className="hero-name-wrap">
+                <div className="hero-name-glow" aria-hidden />
+                <h1 className="hero-name">
+                  <GlitchText text="Lucas" /> <span className="name-light">Fernandez</span>
+                </h1>
+              </div>
             </Reveal>
             <Reveal delay={200}>
               <p className="hero-role">
-                <Typewriter strings={['Senior Frontend Engineer','AI-Augmented Developer','Next.js Specialist','E-commerce Builder']} />
+                <Typewriter strings={['Fullstack Engineer','AI-Augmented Developer','React · Node · Python','Builder of DevProbe & FieldAnalyst']} />
               </p>
             </Reveal>
             <Reveal delay={300}>
-              <p className="hero-sub">12+ years shipping production React apps. I use AI tools daily to move faster and build better.</p>
+              <p className="hero-sub">12+ years shipping production web apps — frontend, backend, and everything in between. I use AI tools daily to move faster and build better.</p>
             </Reveal>
             <Reveal delay={400}>
               <div className="hero-ctas">
@@ -413,8 +508,8 @@ export default function App() {
       <section className="stats-strip" aria-label="Key metrics">
         <StatCell value="12" suffix="+" label="Years shipping" delay={0} />
         <StatCell value="40" suffix="+" label="UI components built" delay={80} />
-        <StatCell value="10" suffix="k+" label="CMS entries migrated" delay={160} />
-        <StatCell value="95" suffix="%" label="React / Next.js" delay={240} />
+        <StatCell value="3" suffix="" label="Live demos deployed" delay={160} />
+        <StatCell value="28" suffix="+" label="Coding challenges in DevProbe" delay={240} />
       </section>
 
       <section className="section" id="work">
@@ -431,7 +526,7 @@ export default function App() {
             <Reveal>
               <h2 className="section-label">Expertise</h2>
               <ScrambleTitle text="Core skills" className="section-title-inline" />
-              <p className="skills-sub">Deep frontend knowledge paired with AI tooling. Not just code generation — real workflow integration that ships faster.</p>
+              <p className="skills-sub">Fullstack delivery — React/Next.js frontends, Node/Python backends, and AI tooling wired into real workflows. Not just code generation — shipping faster with intent.</p>
             </Reveal>
           </div>
           <div className="skills-right">
@@ -443,15 +538,23 @@ export default function App() {
       <section className="section" id="about">
         <div className="about-layout">
           <Reveal className="about-left">
+            <div className="about-avatar-wrap">
+              <img
+                src={`${process.env.PUBLIC_URL}/avatar.jpg`}
+                alt="Lucas Fernandez"
+                className="about-avatar"
+                onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `${process.env.PUBLIC_URL}/avatar.svg`; }}
+              />
+            </div>
             <h2 className="section-label">About</h2>
             <ScrambleTitle text="Who I am" className="section-title-inline" />
           </Reveal>
           <Reveal delay={120} className="about-right">
             <p className="about-text">Based in Tandil, Argentina. 12+ years building web products for companies across LATAM and remotely for US/EU clients.</p>
-            <p className="about-text">I specialize in React/Next.js ecosystems, headless CMS architectures, and e-commerce frontends. Since 2023 I've been integrating AI tools into my daily workflow — Claude, Cursor, Copilot — which has meaningfully changed how fast I ship.</p>
-            <p className="about-text">I care about conversion funnels, UX details, and why some checkout flows work and others don't.</p>
+            <p className="about-text">I'm a fullstack engineer — React/Next.js on the front, Node and Python on the back, with AI tools integrated into how I actually work. DevProbe, FieldAnalyst and Filuca are live examples of that range.</p>
+            <p className="about-text">I care about shipping real products: performance metrics, conversion funnels, and why some architectures survive production and others don't.</p>
             <div className="about-tags">
-              {['Remote-first','English fluent','UTC-3','12+ yrs XP','Open to full-time'].map(t => (
+              {['Fullstack','Remote-first','English fluent','UTC-3','12+ yrs XP','Open to full-time'].map(t => (
                 <span key={t} className="about-tag">{t}</span>
               ))}
             </div>
@@ -463,11 +566,11 @@ export default function App() {
         <Reveal>
           <p className="section-label">Let's talk</p>
           <h2 className="contact-title">Open to opportunities</h2>
-          <p className="contact-sub">Remote · Full-time or contract · React / Next.js / Node</p>
+          <p className="contact-sub">Remote · Full-time or contract · React / Node / Python</p>
           <a href="mailto:lucaspho@gmail.com" className="btn-primary btn-large btn-glow">lucaspho@gmail.com</a>
           <div className="social-links">
             <a href="https://github.com/lucasfernandezdev15" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/ACoAAA9wvEYBfgEa1wdwofAAGAnMTu-hNSD8mQk" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/lucas-fernandez-19a90772" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
         </Reveal>
       </section>

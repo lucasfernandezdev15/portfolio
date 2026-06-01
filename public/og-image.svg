@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#080808"/>
+  <circle cx="200" cy="120" r="300" fill="#2c6cff" opacity="0.12"/>
+  <circle cx="1000" cy="500" r="350" fill="#e040fb" opacity="0.1"/>
+  <circle cx="600" cy="315" r="250" fill="#e8d5b0" opacity="0.06"/>
+  <line x1="0" y1="80" x2="1200" y2="80" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <line x1="0" y1="550" x2="1200" y2="550" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="80" y="200" font-family="Georgia, serif" font-size="28" fill="#e8d5b0" letter-spacing="8">AVAILABLE FOR REMOTE</text>
+  <text x="80" y="310" font-family="Georgia, serif" font-size="96" font-weight="700" fill="#f0ede8" letter-spacing="-3">Lucas Fernandez</text>
+  <text x="80" y="390" font-family="monospace" font-size="36" fill="#7a7670">Fullstack Engineer · React · Node · AI</text>
+  <text x="80" y="480" font-family="monospace" font-size="22" fill="#e8d5b0">12+ years · Tandil, Argentina · lucaspho@gmail.com</text>
+  <rect x="80" y="510" width="180" height="3" fill="#2c6cff"/>
+</svg>
