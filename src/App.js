@@ -199,7 +199,7 @@ function ScrambleTitle({ text, className = '' }) {
 const TERMINAL_LINES = [
   { prompt: '$', cmd: 'whoami', out: 'lucas-fernandez · fullstack-engineer · AR' },
   { prompt: '$', cmd: 'cat stack.json', out: '{ react, next, node, python, ai-tools }' },
-  { prompt: '$', cmd: 'curl devprobe.vercel.app/health', out: '200 OK · 28 challenges live' },
+  { prompt: '$', cmd: 'curl leadpages-preview.vercel.app', out: '200 OK · Rack & Pinion · Sanity CMS' },
   { prompt: '$', cmd: 'cursor --status', out: '● AI-augmented workflow · Claude · Copilot' },
 ];
 
@@ -397,7 +397,7 @@ export default function App() {
     { name: 'TypeScript / Node.js', level: 90, color: '#3178C6' },
     { name: 'Python / APIs', level: 82, color: '#8CC84B' },
     { name: 'AI Tooling — Claude · Copilot · Cursor', level: 88, color: '#F5A623' },
-    { name: 'PostgreSQL / MongoDB', level: 80, color: '#38BDF8' },
+    { name: 'Sanity CMS / Headless', level: 88, color: '#F1564C' },
     { name: 'Vercel / CI · Docker', level: 85, color: '#F1564C' },
   ];
 
@@ -411,6 +411,15 @@ export default function App() {
       githubUrl: 'https://github.com/lucasfernandezdev15',
       featured: true,
       metric: { value: '28+ challenges', label: 'AI reviewer polls your code every ~30s during sessions' },
+    },
+    {
+      title: 'Leadpages — Rack & Pinion',
+      tech: ['Next.js', 'Sanity CMS', 'TypeScript', 'Turborepo', 'Tailwind'],
+      desc: 'Marketing site for Leadpages, the landing-page platform used by 466k+ businesses to capture leads. This deploy is the classic Rack & Pinion build — the editorial site before the current AI-first redesign: homepage, blog, templates, and conversion sections powered by Sanity, not the new AI page builder flow.',
+      tag: 'Enterprise · MarTech',
+      demoUrl: 'https://leadpages-rack-pinion-git-fix-home-s-7c8fe2-leadpages-marketing.vercel.app/',
+      githubUrl: 'https://github.com/lucasfernandezdev15/leadpages',
+      metric: { value: 'Monorepo', label: 'Next.js + Sanity Studio · Turborepo · Radix · Motion · Vercel' },
     },
     {
       title: 'FieldAnalyst — Hockey Analytics',
@@ -429,19 +438,11 @@ export default function App() {
       demoUrl: 'https://filuca.vercel.app/',
       metric: { value: 'LCP 1.8s', label: 'mobile · static deploy, zero backend overhead' },
     },
-    {
-      title: 'CMS Migration Pipeline',
-      tech: ['Python', 'Sanity', 'Contentful', 'Node.js'],
-      desc: 'Automated pipeline migrating content entries between CMS platforms with validation, dry-run mode, and rollback on failure.',
-      tag: 'Backend',
-      githubUrl: 'https://github.com/lucasfernandezdev15',
-      metric: { value: '10k+ entries', label: 'migrated with zero downtime · rollback on fail' },
-    },
   ];
 
   const marqueeItems = [
-    'React 19', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'Claude API',
-    'PostgreSQL', 'Zustand', 'React Query', 'Vercel', 'Docker', 'Fullstack',
+    'React 19', 'Next.js', 'Sanity CMS', 'TypeScript', 'Turborepo', 'Tailwind',
+    'Node.js', 'Claude API', 'Zustand', 'Vercel', 'Fullstack',
   ];
 
   return (
@@ -508,7 +509,7 @@ export default function App() {
       <section className="stats-strip" aria-label="Key metrics">
         <StatCell value="12" suffix="+" label="Years shipping" delay={0} />
         <StatCell value="40" suffix="+" label="UI components built" delay={80} />
-        <StatCell value="3" suffix="" label="Live demos deployed" delay={160} />
+        <StatCell value="4" suffix="" label="Live demos deployed" delay={160} />
         <StatCell value="28" suffix="+" label="Coding challenges in DevProbe" delay={240} />
       </section>
 
@@ -551,7 +552,7 @@ export default function App() {
           </Reveal>
           <Reveal delay={120} className="about-right">
             <p className="about-text">Based in Tandil, Argentina. 12+ years building web products for companies across LATAM and remotely for US/EU clients.</p>
-            <p className="about-text">I'm a fullstack engineer — React/Next.js on the front, Node and Python on the back, with AI tools integrated into how I actually work. DevProbe, FieldAnalyst and Filuca are live examples of that range.</p>
+            <p className="about-text">I'm a fullstack engineer — React/Next.js on the front, Node and Python on the back, with AI tools integrated into how I actually work. From Leadpages' Sanity-driven marketing stack to DevProbe, FieldAnalyst and Filuca — all shipped and deployed.</p>
             <p className="about-text">I care about shipping real products: performance metrics, conversion funnels, and why some architectures survive production and others don't.</p>
             <div className="about-tags">
               {['Fullstack','Remote-first','English fluent','UTC-3','12+ yrs XP','Open to full-time'].map(t => (
