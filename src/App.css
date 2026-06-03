@@ -452,7 +452,23 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
   border-top: 1px solid var(--border);
 }
 
-/* ── RESPONSIVE ── */
+/* ── TABLET: bento simplificado (evita huecos del grid 3 col) ── */
+@media (max-width: 1024px) {
+  .projects-bento {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+  }
+  .bento-featured,
+  .bento-item-3 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .bento-item-0 .tilt-card { min-height: unset; }
+  .bento-featured .proj-index { font-size: 3rem; }
+}
+
+/* ── MOBILE ── */
 @media (max-width: 768px) {
   .nav { padding: 20px 24px; }
   .nav-links { gap: 20px; }
@@ -466,9 +482,16 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
   .stat-cell:nth-child(2) { border-right: none; }
   .stat-cell { border-bottom: 1px solid var(--border); }
   .stat-cell:nth-child(3), .stat-cell:nth-child(4) { border-bottom: none; }
-  .projects-bento { grid-template-columns: 1fr; }
-  .bento-featured { grid-column: span 1; grid-row: span 1; }
-  .bento-item-3 { grid-column: span 1; }
+  .section-title,
+  .scramble-title { margin-bottom: 40px; }
+  .projects-bento > * { min-height: 0; }
+  .tilt-card { padding: 28px 24px; }
+  .bento-item-0 .tilt-card,
+  .tilt-card-featured { min-height: unset; height: auto; }
+  .proj-index { font-size: 2rem; margin-bottom: 4px; }
+  .bento-featured .proj-index { font-size: 2rem; }
+  .proj-desc { margin-bottom: 20px; }
+  .proj-tech { margin-bottom: 20px; }
   .skills-layout, .about-layout { grid-template-columns: 1fr; gap: 40px; }
   .about-avatar-wrap { max-width: 200px; }
   .projects-grid { grid-template-columns: 1fr; }
