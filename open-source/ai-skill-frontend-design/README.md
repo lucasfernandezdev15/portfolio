@@ -12,7 +12,6 @@ Enhanced fork of Anthropic's [`frontend-design`](https://github.com/anthropics/s
 ```bash
 git clone https://github.com/lucasfernandezdev15/ai-skill-frontend-design.git
 cp -r ai-skill-frontend-design ~/.cursor/skills/frontend-design
-# or into your project's .cursor/skills/
 ```
 
 ## Scan your UI
