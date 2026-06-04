@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import './App.css';
 
 function MagneticCursor() {
@@ -389,19 +391,86 @@ function ProjectCard({ title, tech, desc, tag, demoUrl, githubUrl, metric, delay
   );
 }
 
-function OssCard({ title, desc, tag, githubUrl, highlights, delay = 0 }) {
+function OssCard({ title, desc, tag, githubUrl, highlights, skillId, active, onPreview, delay = 0 }) {
   return (
     <Reveal delay={delay}>
-      <div className="oss-card">
+      <div className={`oss-card${active ? ' oss-card-active' : ''}`}>
         <div className="proj-tag">{tag}</div>
         <h3 className="proj-title">{title}</h3>
         <p className="proj-desc">{desc}</p>
         <ul className="oss-highlights">
           {highlights.map(h => <li key={h}>{h}</li>)}
         </ul>
-        <a href={githubUrl} target="_blank" rel="noreferrer" className="proj-link proj-link-live">View skill →</a>
+        <div className="proj-links">
+          <button type="button" className="proj-link proj-link-live skill-preview-btn" onClick={() => onPreview(skillId)}>
+            Preview SKILL.md {active ? '↑' : '→'}
+          </button>
+          <a href={githubUrl} target="_blank" rel="noreferrer" className="proj-link">GitHub →</a>
+        </div>
       </div>
     </Reveal>
+  );
+}
+
+function SkillDocsPreview({ skills, activeId, onSelect }) {
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const panelRef = useRef(null);
+
+  const active = skills.find(s => s.id === activeId);
+
+  useEffect(() => {
+    if (!activeId || !active) {
+      setContent('');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    fetch(`${process.env.PUBLIC_URL}/skills/${active.previewFile}`)
+      .then(r => { if (!r.ok) throw new Error('Not found'); return r.text(); })
+      .then(setContent)
+      .catch(() => setError('Could not load SKILL.md'))
+      .finally(() => setLoading(false));
+  }, [activeId, active]);
+
+  useEffect(() => {
+    if (activeId && panelRef.current) {
+      panelRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [activeId, content]);
+
+  if (!activeId) return null;
+
+  return (
+    <div ref={panelRef} className="skill-docs-panel" id="skill-preview">
+      <div className="skill-docs-tabs">
+        {skills.map(s => (
+          <button
+            key={s.id}
+            type="button"
+            className={`skill-docs-tab${s.id === activeId ? ' skill-docs-tab-active' : ''}`}
+            onClick={() => onSelect(s.id)}
+          >
+            {s.title}
+          </button>
+        ))}
+        <button type="button" className="skill-docs-close" onClick={() => onSelect(null)} aria-label="Close preview">✕</button>
+      </div>
+      <div className="skill-docs-meta">
+        <span className="skill-docs-file">skills/{active.previewFile}</span>
+        <a href={active.githubUrl} target="_blank" rel="noreferrer" className="skill-docs-gh">Open on GitHub →</a>
+      </div>
+      <div className="skill-docs-body">
+        {loading && <p className="skill-docs-status">Loading SKILL.md…</p>}
+        {error && <p className="skill-docs-status skill-docs-error">{error}</p>}
+        {!loading && !error && content && (
+          <div className="skill-markdown">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -425,6 +494,11 @@ function ExperienceItem({ role, company, period, location, bullets, delay = 0 })
 export default function App() {
   const cvHref = `${process.env.PUBLIC_URL}/Lucas_Fernandez_CV.pdf`;
   const [scrolled, setScrolled] = useState(false);
+  const [activeSkillPreview, setActiveSkillPreview] = useState(null);
+
+  const toggleSkillPreview = useCallback((id) => {
+    setActiveSkillPreview(prev => (prev === id ? null : id));
+  }, []);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', fn);
@@ -495,17 +569,21 @@ export default function App() {
 
   const ossSkills = [
     {
+      id: 'frontend-design',
       title: 'frontend-design ✨',
       tag: 'Cursor · Agent Skill',
       desc: 'Enhanced fork of Anthropic\'s frontend-design skill — anti-slop checklist, DESIGN.md remix families, and a CSS/JSX fingerprint scanner.',
       githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-frontend-design',
+      previewFile: 'frontend-design.md',
       highlights: ['anti-slop-scan.js', 'Bento > 3-col grids', 'awesome-claude-design remixes'],
     },
     {
+      id: 'mcp-builder',
       title: 'mcp-builder ✨',
       tag: 'Cursor · MCP',
       desc: 'Enhanced fork of Anthropic\'s mcp-builder — agent shipping checklist, Vercel deploy notes, and tool metadata linter for MCP servers.',
       githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-mcp-builder',
+      previewFile: 'mcp-builder.md',
       highlights: ['tool-lint.mjs', 'MCP inspector workflow', 'Streamable HTTP on Vercel'],
     },
   ];
@@ -662,8 +740,22 @@ export default function App() {
         <ScrambleTitle text="AI Agent Skills" />
         <p className="oss-intro">Enhanced forks of <a href="https://github.com/anthropics/skills" target="_blank" rel="noreferrer" className="oss-link">anthropics/skills</a> — drop into <code className="oss-code">.cursor/skills/</code> and ship with less slop.</p>
         <div className="oss-grid">
-          {ossSkills.map((s, i) => <OssCard key={s.title} {...s} delay={i * 100} />)}
+          {ossSkills.map((s, i) => (
+            <OssCard
+              key={s.id}
+              {...s}
+              skillId={s.id}
+              active={activeSkillPreview === s.id}
+              onPreview={toggleSkillPreview}
+              delay={i * 100}
+            />
+          ))}
         </div>
+        <SkillDocsPreview
+          skills={ossSkills}
+          activeId={activeSkillPreview}
+          onSelect={setActiveSkillPreview}
+        />
       </section>
 
       <section className="section" id="about">
