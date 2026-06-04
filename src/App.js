@@ -384,7 +384,25 @@ function ProjectCard({ title, tech, desc, tag, demoUrl, githubUrl, metric, delay
   );
 }
 
+function ExperienceItem({ role, company, period, location, bullets, delay = 0 }) {
+  return (
+    <Reveal delay={delay}>
+      <article className="exp-item">
+        <div className="exp-header">
+          <h3 className="exp-role">{role}</h3>
+          <span className="exp-period">{period}</span>
+        </div>
+        <p className="exp-company">{company} · {location}</p>
+        <ul className="exp-bullets">
+          {bullets.map(b => <li key={b}>{b}</li>)}
+        </ul>
+      </article>
+    </Reveal>
+  );
+}
+
 export default function App() {
+  const cvHref = `${process.env.PUBLIC_URL}/Lucas_Fernandez_CV.pdf`;
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -454,6 +472,42 @@ export default function App() {
     'Gemini API', 'Turborepo', 'Claude API', 'Vercel', 'Fullstack',
   ];
 
+  const experience = [
+    {
+      role: 'Senior Fullstack Developer',
+      company: 'Código del Sur',
+      period: 'May 2022 – Present',
+      location: 'Remote',
+      bullets: [
+        'Built 40+ reusable React/Next.js components, cutting new-feature UI dev time ~35%.',
+        'Integrated AI-assisted workflow (Copilot + Claude) — faster sprints and shorter PR cycles.',
+        'Architected headless Contentful & Sanity integrations for 3 enterprise storefront clients.',
+        'Collaborated with UX on conversion funnels; measurable lift in checkout completion.',
+      ],
+    },
+    {
+      role: 'Fullstack Developer',
+      company: 'Natural Tech House',
+      period: 'Jan 2020 – May 2022',
+      location: 'Remote',
+      bullets: [
+        'React, TypeScript, and Material UI apps with Python backend integrations.',
+        'Contentful CMS workflows for content-driven e-commerce across multiple clients.',
+        'Responsive standards that cut QA-reported layout bugs by 40%.',
+      ],
+    },
+    {
+      role: 'Semi-Senior Fullstack Developer',
+      company: '7 Ideas · Grupo Most',
+      period: 'Jan 2014 – Jan 2020',
+      location: 'Remote / Hybrid',
+      bullets: [
+        'Led frontend migration from AngularJS to React; full-stack REST API work.',
+        'Earlier: Java/Spring/Hibernate backend and mobile apps (Grupo Most, 2014–2017).',
+      ],
+    },
+  ];
+
   return (
     <div className="app">
       <ScrollProgress />
@@ -463,9 +517,10 @@ export default function App() {
       <nav className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
         <span className="nav-logo">LF<span className="nav-dot">.</span></span>
         <div className="nav-links">
-          {['Work','Skills','About','Contact'].map(l => (
+          {['Work','Experience','Skills','About','Contact'].map(l => (
             <a key={l} href={`#${l.toLowerCase()}`} className="nav-link">{l}</a>
           ))}
+          <a href={cvHref} download="Lucas_Fernandez_CV.pdf" className="nav-link nav-link-cv">CV ↓</a>
         </div>
       </nav>
 
@@ -502,6 +557,7 @@ export default function App() {
             <Reveal delay={400}>
               <div className="hero-ctas">
                 <a href="#work" className="btn-primary btn-glow">See my work</a>
+                <a href={cvHref} download="Lucas_Fernandez_CV.pdf" className="btn-ghost">Download CV</a>
                 <a href="mailto:lucaspho@gmail.com" className="btn-ghost">Get in touch</a>
               </div>
             </Reveal>
@@ -527,6 +583,23 @@ export default function App() {
         <ScrambleTitle text="Things I've built" />
         <div className="projects-bento">
           {projects.map((p, i) => <ProjectCard key={p.title} {...p} index={i} delay={i * 80} />)}
+        </div>
+      </section>
+
+      <section className="section section-dark" id="experience">
+        <div className="experience-layout">
+          <Reveal className="experience-left">
+            <h2 className="section-label">Career</h2>
+            <ScrambleTitle text="Experience" className="section-title-inline" />
+            <p className="experience-sub">12+ years from AngularJS migrations to AI-augmented fullstack delivery. Full timeline in the PDF.</p>
+            <a href={cvHref} download="Lucas_Fernandez_CV.pdf" className="btn-primary btn-glow experience-cv-btn">Download CV (PDF)</a>
+            <p className="experience-edu">Systems Analyst · UNICEN, Tandil · 2005 – 2013</p>
+          </Reveal>
+          <div className="experience-list">
+            {experience.map((job, i) => (
+              <ExperienceItem key={job.company} {...job} delay={i * 80} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -578,6 +651,7 @@ export default function App() {
           <h2 className="contact-title">Open to opportunities</h2>
           <p className="contact-sub">Remote · Full-time or contract · React / Node / Python</p>
           <a href="mailto:lucaspho@gmail.com" className="btn-primary btn-large btn-glow">lucaspho@gmail.com</a>
+          <a href={cvHref} download="Lucas_Fernandez_CV.pdf" className="btn-ghost btn-large contact-cv-btn">Download CV</a>
           <div className="social-links">
             <a href="https://github.com/lucasfernandezdev15" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/lucas-fernandez-19a90772" target="_blank" rel="noreferrer">LinkedIn</a>
