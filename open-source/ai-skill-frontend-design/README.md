@@ -1,25 +1,23 @@
-# frontend-design ✨ (enhanced fork)
+# lucas-ui-craft
 
-Enhanced fork of Anthropic's [`frontend-design`](https://github.com/anthropics/skills/tree/main/skills/frontend-design) skill for Cursor / Claude agents.
+Personal Cursor skill by **Lucas Fernandez** — distinctive React/Next UI without AI slop.
 
-**Added by Lucas Fernandez:**
-- Anti-slop checklist (bento > 3-col grids, typography, metrics)
-- DESIGN.md remix families cheat sheet
-- `scripts/anti-slop-scan.js` — scan CSS/JSX for generic AI fingerprints
+Forked from Anthropic `frontend-design`, rewritten around shipped work: [portfolio](https://github.com/lucasfernandezdev15/portfolio), [Leadpages](https://github.com/lucasfernandezdev15/leadpages), [DevProbe](https://live-coding-test-alpha.vercel.app/), [AI UX Lab](https://ai-aux-lab.vercel.app/), [Filuca](https://filuca.vercel.app/).
 
-## Install (Cursor)
+## Install
 
 ```bash
 git clone https://github.com/lucasfernandezdev15/ai-skill-frontend-design.git
-cp -r ai-skill-frontend-design ~/.cursor/skills/frontend-design
+cp -r ai-skill-frontend-design ~/.cursor/skills/lucas-ui-craft
 ```
 
-## Scan your UI
+## Scan
 
 ```bash
 node scripts/anti-slop-scan.js ./src
+node scripts/anti-slop-scan.js ./src --json
 ```
 
-## License
+## Preview
 
-Anthropic skill terms in `LICENSE.txt`. Enhancements MIT.
+Read `SKILL.md` on [Lucas portfolio](https://github.com/lucasfernandezdev15/portfolio) → Open Source section.

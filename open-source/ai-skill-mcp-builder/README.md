@@ -1,27 +1,24 @@
-# mcp-builder ✨ (enhanced fork)
+# lucas-mcp-ship
 
-Enhanced fork of Anthropic's [`mcp-builder`](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) skill.
+Personal Cursor skill by **Lucas Fernandez** — ship MCP servers + AI tool UIs (DevProbe, AI UX Lab patterns).
 
-**Added by Lucas Fernandez:**
-- AI-native product checklist (annotations, pagination, Cursor quirks)
-- Vercel remote MCP deploy notes
-- `scripts/tool-lint.mjs` — quick tool metadata hygiene scan
+Fork of Anthropic `mcp-builder` with production checklists and case studies.
 
-## Install (Cursor)
+## Install
 
 ```bash
 git clone https://github.com/lucasfernandezdev15/ai-skill-mcp-builder.git
-cp -r ai-skill-mcp-builder ~/.cursor/skills/mcp-builder
+cp -r ai-skill-mcp-builder ~/.cursor/skills/lucas-mcp-ship
 ```
 
-## Lint your server
+## Lint
 
 ```bash
 node scripts/tool-lint.mjs src/index.ts
+node scripts/tool-lint.mjs src/index.ts --json
+npx @modelcontextprotocol/inspector
 ```
 
-Includes upstream `reference/` docs and evaluation scripts from Anthropic.
+## Reference docs
 
-## License
-
-Anthropic skill terms in `LICENSE.txt`. Enhancements MIT.
+See `reference/` for full Anthropic MCP guides.

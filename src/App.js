@@ -569,22 +569,31 @@ export default function App() {
 
   const ossSkills = [
     {
-      id: 'frontend-design',
-      title: 'frontend-design ✨',
+      id: 'lucas-ui-craft',
+      title: 'lucas-ui-craft',
       tag: 'Cursor · Agent Skill',
-      desc: 'Enhanced fork of Anthropic\'s frontend-design skill — anti-slop checklist, DESIGN.md remix families, and a CSS/JSX fingerprint scanner.',
+      desc: 'Personal UI skill — shipped patterns from Leadpages, DevProbe, AI UX Lab, Filuca, and this portfolio. Bento layouts, case-study metrics, anti-slop scanner.',
       githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-frontend-design',
-      previewFile: 'frontend-design.md',
-      highlights: ['anti-slop-scan.js', 'Bento > 3-col grids', 'awesome-claude-design remixes'],
+      previewFile: 'lucas-ui-craft.md',
+      highlights: ['anti-slop-scan.js', '4 design lanes', 'DevProbe + Leadpages case studies'],
     },
     {
-      id: 'mcp-builder',
-      title: 'mcp-builder ✨',
+      id: 'lucas-mcp-ship',
+      title: 'lucas-mcp-ship',
       tag: 'Cursor · MCP',
-      desc: 'Enhanced fork of Anthropic\'s mcp-builder — agent shipping checklist, Vercel deploy notes, and tool metadata linter for MCP servers.',
+      desc: 'Ship MCP servers and AI tool UIs to production — DevProbe timed reviewer + AI UX Lab SSE patterns, Vercel checklist, tool-lint.',
       githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-mcp-builder',
-      previewFile: 'mcp-builder.md',
-      highlights: ['tool-lint.mjs', 'MCP inspector workflow', 'Streamable HTTP on Vercel'],
+      previewFile: 'lucas-mcp-ship.md',
+      highlights: ['tool-lint.mjs', 'mcp_ping health tool', 'Streamable HTTP on Vercel'],
+    },
+    {
+      id: 'live-coding-reviewer',
+      title: 'live-coding-reviewer',
+      tag: 'Original · DevProbe',
+      desc: 'Original skill from shipping DevProbe — timed AI code review, challenge banks, interviewer-style hints. Not a chat clone.',
+      githubUrl: 'https://github.com/lucasfernandezdev15/portfolio/tree/main/open-source/ai-skill-live-coding-reviewer',
+      previewFile: 'live-coding-reviewer.md',
+      highlights: ['28+ challenges', 'Interviewer prompt shape', 'Split-pane UI patterns'],
     },
   ];
 
@@ -738,7 +747,7 @@ export default function App() {
       <section className="section section-dark" id="oss">
         <Reveal><h2 className="section-label">Open source</h2></Reveal>
         <ScrambleTitle text="AI Agent Skills" />
-        <p className="oss-intro">Enhanced forks of <a href="https://github.com/anthropics/skills" target="_blank" rel="noreferrer" className="oss-link">anthropics/skills</a> — drop into <code className="oss-code">.cursor/skills/</code> and ship with less slop.</p>
+        <p className="oss-intro">Personal Cursor skills from shipped work — two enhanced forks plus one original from <a href="https://live-coding-test-alpha.vercel.app/" target="_blank" rel="noreferrer" className="oss-link">DevProbe</a>. Drop into <code className="oss-code">.cursor/skills/</code> and invoke with <code className="oss-code">@skill-name</code>.</p>
         <div className="oss-grid">
           {ossSkills.map((s, i) => (
             <OssCard
