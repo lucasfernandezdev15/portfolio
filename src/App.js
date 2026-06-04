@@ -498,14 +498,14 @@ export default function App() {
       title: 'frontend-design ✨',
       tag: 'Cursor · Agent Skill',
       desc: 'Enhanced fork of Anthropic\'s frontend-design skill — anti-slop checklist, DESIGN.md remix families, and a CSS/JSX fingerprint scanner.',
-      githubUrl: 'https://github.com/lucasfernandezdev15/portfolio/tree/main/open-source/ai-skill-frontend-design',
+      githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-frontend-design',
       highlights: ['anti-slop-scan.js', 'Bento > 3-col grids', 'awesome-claude-design remixes'],
     },
     {
       title: 'mcp-builder ✨',
       tag: 'Cursor · MCP',
       desc: 'Enhanced fork of Anthropic\'s mcp-builder — agent shipping checklist, Vercel deploy notes, and tool metadata linter for MCP servers.',
-      githubUrl: 'https://github.com/lucasfernandezdev15/portfolio/tree/main/open-source/ai-skill-mcp-builder',
+      githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-mcp-builder',
       highlights: ['tool-lint.mjs', 'MCP inspector workflow', 'Streamable HTTP on Vercel'],
     },
   ];
