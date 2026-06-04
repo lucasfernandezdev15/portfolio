@@ -623,9 +623,12 @@ export default function App() {
           <Reveal className="about-left">
             <div className="about-avatar-wrap">
               <img
-                src={`${process.env.PUBLIC_URL}/avatar.jpg`}
-                alt="Lucas Fernandez"
+                src={`${process.env.PUBLIC_URL}/avatar.png`}
+                alt="Lucas Fernandez — Fullstack Engineer"
                 className="about-avatar"
+                width={280}
+                height={280}
+                loading="lazy"
                 onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = `${process.env.PUBLIC_URL}/avatar.svg`; }}
               />
             </div>

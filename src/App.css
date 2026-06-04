@@ -425,6 +425,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
 .about-avatar {
   position: relative; display: block;
   width: 100%; aspect-ratio: 1; object-fit: cover;
+  object-position: center 20%;
   background: var(--bg3);
 }
 .about-text { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 20px; }
