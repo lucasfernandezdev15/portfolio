@@ -193,7 +193,12 @@ function ScrambleTitle({ text, className = '' }) {
     }, 40);
     return () => clearInterval(id);
   }, [visible, text]);
-  return <p ref={ref} className={`section-title scramble-title ${className}`}>{display}</p>;
+  const inline = className.includes('section-title-inline');
+  return (
+    <p ref={ref} className={`scramble-title ${inline ? 'section-title-inline' : 'section-title'}`.trim()}>
+      {display}
+    </p>
+  );
 }
 
 const TERMINAL_LINES = [
@@ -587,10 +592,10 @@ export default function App() {
       </section>
 
       <section className="section section-dark" id="experience">
+        <Reveal><h2 className="section-label">Career</h2></Reveal>
+        <ScrambleTitle text="Experience" />
         <div className="experience-layout">
           <Reveal className="experience-left">
-            <h2 className="section-label">Career</h2>
-            <ScrambleTitle text="Experience" className="section-title-inline" />
             <p className="experience-sub">12+ years from AngularJS migrations to AI-augmented fullstack delivery. Full timeline in the PDF.</p>
             <a href={cvHref} download="Lucas_Fernandez_CV.pdf" className="btn-primary btn-glow experience-cv-btn">Download CV (PDF)</a>
             <p className="experience-edu">Systems Analyst · UNICEN, Tandil · 2005 – 2013</p>
