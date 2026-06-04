@@ -591,7 +591,7 @@ export default function App() {
       title: 'live-coding-reviewer',
       tag: 'Original · DevProbe',
       desc: 'Original skill from shipping DevProbe — timed AI code review, challenge banks, interviewer-style hints. Not a chat clone.',
-      githubUrl: 'https://github.com/lucasfernandezdev15/portfolio/tree/main/open-source/ai-skill-live-coding-reviewer',
+      githubUrl: 'https://github.com/lucasfernandezdev15/ai-skill-live-coding-reviewer',
       previewFile: 'live-coding-reviewer.md',
       highlights: ['28+ challenges', 'Interviewer prompt shape', 'Split-pane UI patterns'],
     },

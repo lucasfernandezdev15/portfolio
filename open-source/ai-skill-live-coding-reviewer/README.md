@@ -7,8 +7,8 @@ Timed AI code review, challenge banks, interviewer-style hints. Not a chat clone
 ## Install
 
 ```bash
-git clone https://github.com/lucasfernandezdev15/portfolio.git
-cp -r portfolio/open-source/ai-skill-live-coding-reviewer ~/.cursor/skills/live-coding-reviewer
+git clone https://github.com/lucasfernandezdev15/ai-skill-live-coding-reviewer.git
+cp -r ai-skill-live-coding-reviewer ~/.cursor/skills/live-coding-reviewer
 ```
 
 ## Invoke

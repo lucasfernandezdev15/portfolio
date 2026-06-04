@@ -111,11 +111,9 @@ SSE optional for **streaming hints**; polling OK for MVP (DevProbe uses interval
 ## Install (Cursor)
 
 ```bash
-# In portfolio monorepo:
-cp -r open-source/ai-skill-live-coding-reviewer ~/.cursor/skills/live-coding-reviewer
+git clone https://github.com/lucasfernandezdev15/ai-skill-live-coding-reviewer.git
+cp -r ai-skill-live-coding-reviewer ~/.cursor/skills/live-coding-reviewer
 ```
-
-Or clone [lucasfernandezdev15/portfolio](https://github.com/lucasfernandezdev15/portfolio) and copy from `open-source/ai-skill-live-coding-reviewer`.
 
 Invoke: `@live-coding-reviewer`
 
