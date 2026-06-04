@@ -389,6 +389,22 @@ function ProjectCard({ title, tech, desc, tag, demoUrl, githubUrl, metric, delay
   );
 }
 
+function OssCard({ title, desc, tag, githubUrl, highlights, delay = 0 }) {
+  return (
+    <Reveal delay={delay}>
+      <div className="oss-card">
+        <div className="proj-tag">{tag}</div>
+        <h3 className="proj-title">{title}</h3>
+        <p className="proj-desc">{desc}</p>
+        <ul className="oss-highlights">
+          {highlights.map(h => <li key={h}>{h}</li>)}
+        </ul>
+        <a href={githubUrl} target="_blank" rel="noreferrer" className="proj-link proj-link-live">View skill →</a>
+      </div>
+    </Reveal>
+  );
+}
+
 function ExperienceItem({ role, company, period, location, bullets, delay = 0 }) {
   return (
     <Reveal delay={delay}>
@@ -474,7 +490,24 @@ export default function App() {
 
   const marqueeItems = [
     'React 19', 'Next.js 15', 'Sanity CMS', 'SSE Streaming', 'TypeScript',
-    'Gemini API', 'Turborepo', 'Claude API', 'Vercel', 'Fullstack',
+    'Gemini API', 'Turborepo', 'Claude API', 'MCP', 'Agent Skills', 'Vercel',
+  ];
+
+  const ossSkills = [
+    {
+      title: 'frontend-design ✨',
+      tag: 'Cursor · Agent Skill',
+      desc: 'Enhanced fork of Anthropic\'s frontend-design skill — anti-slop checklist, DESIGN.md remix families, and a CSS/JSX fingerprint scanner.',
+      githubUrl: 'https://github.com/lucasfernandezdev15/portfolio/tree/main/open-source/ai-skill-frontend-design',
+      highlights: ['anti-slop-scan.js', 'Bento > 3-col grids', 'awesome-claude-design remixes'],
+    },
+    {
+      title: 'mcp-builder ✨',
+      tag: 'Cursor · MCP',
+      desc: 'Enhanced fork of Anthropic\'s mcp-builder — agent shipping checklist, Vercel deploy notes, and tool metadata linter for MCP servers.',
+      githubUrl: 'https://github.com/lucasfernandezdev15/portfolio/tree/main/open-source/ai-skill-mcp-builder',
+      highlights: ['tool-lint.mjs', 'MCP inspector workflow', 'Streamable HTTP on Vercel'],
+    },
   ];
 
   const experience = [
@@ -485,9 +518,10 @@ export default function App() {
       location: 'Remote',
       bullets: [
         'Built 40+ reusable React/Next.js components, cutting new-feature UI dev time ~35%.',
-        'Integrated AI-assisted workflow (Copilot + Claude) — faster sprints and shorter PR cycles.',
-        'Architected headless Contentful & Sanity integrations for 3 enterprise storefront clients.',
-        'Collaborated with UX on conversion funnels; measurable lift in checkout completion.',
+        'Ship AI-augmented delivery with Claude, Cursor & Copilot — prompt-engineered workflows, RAG-ready patterns, and agent-assisted PR reviews that cut implementation cycles 30–40%.',
+        'Architected headless Contentful & Sanity integrations for 3 enterprise storefront clients with LLM-friendly content schemas.',
+        'Prototyped MCP-connected tooling and SSE streaming UIs for internal AI copilots — production UX, not demo wrappers.',
+        'Collaborated with UX on conversion funnels; measurable lift in checkout completion via A/B tests and Core Web Vitals tuning.',
       ],
     },
     {
@@ -620,6 +654,15 @@ export default function App() {
           <div className="skills-right">
             {skills.map((s, i) => <SkillBar key={s.name} {...s} delay={i * 100} />)}
           </div>
+        </div>
+      </section>
+
+      <section className="section section-dark" id="oss">
+        <Reveal><h2 className="section-label">Open source</h2></Reveal>
+        <ScrambleTitle text="AI Agent Skills" />
+        <p className="oss-intro">Enhanced forks of <a href="https://github.com/anthropics/skills" target="_blank" rel="noreferrer" className="oss-link">anthropics/skills</a> — drop into <code className="oss-code">.cursor/skills/</code> and ship with less slop.</p>
+        <div className="oss-grid">
+          {ossSkills.map((s, i) => <OssCard key={s.title} {...s} delay={i * 100} />)}
         </div>
       </section>
 
