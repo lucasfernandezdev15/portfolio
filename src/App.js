@@ -403,23 +403,32 @@ export default function App() {
 
   const projects = [
     {
+      title: 'Leadpages — Rack & Pinion',
+      tech: ['Next.js', 'Sanity CMS', 'TypeScript', 'Turborepo', 'Tailwind'],
+      desc: 'Marketing site for Leadpages, the landing-page platform used by 466k+ businesses to capture leads. Classic Rack & Pinion build — the editorial site before the current AI-first redesign: homepage, blog, templates, and conversion sections powered by Sanity, not the new AI page builder flow.',
+      tag: 'Enterprise · MarTech',
+      demoUrl: 'https://leadpages-rack-pinion-git-fix-home-s-7c8fe2-leadpages-marketing.vercel.app/',
+      githubUrl: 'https://github.com/lucasfernandezdev15/leadpages',
+      featured: true,
+      metric: { value: 'Monorepo', label: 'Next.js + Sanity Studio · Turborepo · Radix · Motion · Vercel' },
+    },
+    {
+      title: 'AI UX Lab',
+      tech: ['Next.js 15', 'TypeScript', 'SSE', 'Gemini · OpenAI'],
+      desc: 'UX lab for LLM apps: SSE streaming, markdown, tool calling, memory panel, and multi-session chat. Built to show in interviews how you design product UX with LLMs — not just API wrappers. Runs in demo mode without an API key.',
+      tag: 'AI · Frontend UX',
+      demoUrl: 'https://ai-aux-lab.vercel.app/',
+      githubUrl: 'https://github.com/lucasfernandezdev15',
+      metric: { value: '7+ patterns', label: 'SSE streaming · tools UI · memory · multi-provider chat' },
+    },
+    {
       title: 'DevProbe — Live Coding Tests',
       tech: ['Next.js', 'TypeScript', 'Claude API', 'React Query'],
       desc: 'Practice platform for senior frontend interviews. AI reads your code on an interval and gives real-time advice — like a live interviewer watching your screen.',
       tag: 'AI Tooling',
       demoUrl: 'https://live-coding-test-alpha.vercel.app/',
       githubUrl: 'https://github.com/lucasfernandezdev15',
-      featured: true,
       metric: { value: '28+ challenges', label: 'AI reviewer polls your code every ~30s during sessions' },
-    },
-    {
-      title: 'Leadpages — Rack & Pinion',
-      tech: ['Next.js', 'Sanity CMS', 'TypeScript', 'Turborepo', 'Tailwind'],
-      desc: 'Marketing site for Leadpages, the landing-page platform used by 466k+ businesses to capture leads. This deploy is the classic Rack & Pinion build — the editorial site before the current AI-first redesign: homepage, blog, templates, and conversion sections powered by Sanity, not the new AI page builder flow.',
-      tag: 'Enterprise · MarTech',
-      demoUrl: 'https://leadpages-rack-pinion-git-fix-home-s-7c8fe2-leadpages-marketing.vercel.app/',
-      githubUrl: 'https://github.com/lucasfernandezdev15/leadpages',
-      metric: { value: 'Monorepo', label: 'Next.js + Sanity Studio · Turborepo · Radix · Motion · Vercel' },
     },
     {
       title: 'FieldAnalyst — Hockey Analytics',
@@ -441,8 +450,8 @@ export default function App() {
   ];
 
   const marqueeItems = [
-    'React 19', 'Next.js', 'Sanity CMS', 'TypeScript', 'Turborepo', 'Tailwind',
-    'Node.js', 'Claude API', 'Zustand', 'Vercel', 'Fullstack',
+    'React 19', 'Next.js 15', 'Sanity CMS', 'SSE Streaming', 'TypeScript',
+    'Gemini API', 'Turborepo', 'Claude API', 'Vercel', 'Fullstack',
   ];
 
   return (
@@ -509,7 +518,7 @@ export default function App() {
       <section className="stats-strip" aria-label="Key metrics">
         <StatCell value="12" suffix="+" label="Years shipping" delay={0} />
         <StatCell value="40" suffix="+" label="UI components built" delay={80} />
-        <StatCell value="4" suffix="" label="Live demos deployed" delay={160} />
+        <StatCell value="5" suffix="" label="Live demos deployed" delay={160} />
         <StatCell value="28" suffix="+" label="Coding challenges in DevProbe" delay={240} />
       </section>
 
